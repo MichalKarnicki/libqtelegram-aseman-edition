@@ -366,6 +366,9 @@ qint64 Api::authSendCall(const QString &phoneNumber, const QString &phoneCodeHas
 
 // ### auth.signIn()
 void Api::onAuthSignInError(Query *q, qint32 errorCode, const QString &errorText) {
+    if(errorText.contains("_MIGRATE_"))
+        onErrorRetry(q, errorCode, errorText);
+
     Q_EMIT authSignInError(q->msgId(), errorCode, errorText);
 }
 
